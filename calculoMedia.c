@@ -33,7 +33,22 @@ Requisitos
 #include <stdio.h>
 #include <stdlib.h>
 #include <mpi.h>
+#include <time.h>
 
 int main(int argc, char *argv[]) {
+    int id, num_processos; 
+    int N;
+    float *data = NULL;
+    MPI_Init(&argc, &argv);
+    MPI_Comm_rank(MPI_COMM_WORLD, &id);
+    MPI_Comm_size(MPI_COMM_WORLD, &num_processos);
+    // printf("Hello, I am process %d of %d\n", id, num_processos);
+    // 1. Cada processo deve gerar um vetor local de `N` valores aleatórios entre 0 e 1.
+    data = (float *)malloc(N * sizeof(float));
+    for(int i = 0; i<N; i++){
+        data[i] = rand() / (float)RAND_MAX;
+    }
+    free(data)
+    MPI_Finalize();
     return 0;
 }
